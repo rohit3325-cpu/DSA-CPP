@@ -6,9 +6,9 @@ public:
           return;
       }
       if(curr.empty() || curr.back() != '0'){
-              curr += "0";
-      helper(i+1,n,curr,ans);
-      curr.pop_back();
+            curr += "0";
+           helper(i+1,n,curr,ans);
+           curr.pop_back();
       }
       
       
