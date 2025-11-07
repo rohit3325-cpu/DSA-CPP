@@ -1,30 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
-    int n;
+    void helper(string &tiles, vector<bool> &used, int &count, string curr) {
 
-    void solve(string &tiles, vector<bool> &used, unordered_set<string> &result, string &curr) {
-        if (!curr.empty()) {
-            result.insert(curr);
-        }
-        for (int i = 0; i < n; i++) {  
-            if (used[i]) 
+        for (int i = 0; i < tiles.size(); i++) {
+            if(used[i]){
                 continue;
+            }
+            if (i > 0 && tiles[i] == tiles[i - 1] && !used[i - 1]) continue;
+            
             used[i] = true;
-            curr.push_back(tiles[i]);
-
-            solve(tiles, used, result, curr); // explore further
-
-            used[i] = false;           // backtrack
-            curr.pop_back();
+            count++; 
+            helper(tiles, used, count, curr + tiles[i]);
+            used[i] = false; 
         }
     }
 
     int numTilePossibilities(string tiles) {
-        n = tiles.length();
-        vector<bool> used(n, false);
-        unordered_set<string> result;
-        string curr = "";
-        solve(tiles, used, result, curr);
-        return result.size();
+        sort(tiles.begin(), tiles.end()); 
+        vector<bool> used(tiles.size(), false);
+        int count = 0;
+        helper(tiles, used, count, "");
+        return count;
     }
 };
