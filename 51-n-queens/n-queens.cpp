@@ -15,7 +15,7 @@ bool isSafe(int &row, int &cols, int &n, vector<string> &boards) {
     }
     return true;
 }
-
+   
 
      void solve(int row, int n, vector<string> &board, vector<vector<string>> &ans) {
         if (row == n) {
