@@ -1,23 +1,23 @@
 class Solution {
 public:
+  int atmost(vector<int>& nums,int k){
+    if(k<0) return 0;
+     int l=0;int maxl=0;
+     int cnt=0;
 
-    int nicearray(vector<int>& nums,int k){
-        if(k<0) return 0;
-      int l=0;
-      int sum=0;
-      int cnt=0;
-      for(int r=0;r<nums.size();r++){
-        sum += (nums[r]%2);
-        while(sum>k){
-            sum -= (nums[l]%2);
+     for(int r=0;r<nums.size();r++){
+        if(nums[r]%2 !=0) cnt +=1;
+
+        while(cnt>k){
+             if(nums[l]%2 !=0)cnt -= 1;
             l++;
         }
-        cnt = cnt+(r-l+1);
-      }
-      return cnt;
-    }
 
+        maxl += r-l+1;
+     }
+     return maxl;
+  }
     int numberOfSubarrays(vector<int>& nums, int k) {
-        return nicearray(nums,k)-nicearray(nums,k-1);
+        return atmost(nums,k) - atmost(nums,k-1);
     }
 };
