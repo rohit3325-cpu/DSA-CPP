@@ -1,30 +1,29 @@
 class Solution {
 public:
-bool helper(int idx,vector<int> &nums,int sum,vector<vector<int>> &dp){
-    if(sum==0){
-        return true;
+    bool solve(int i,int target,vector<int>&nums,vector<vector<int>>&dp){
+        if(target==0) return true;
+        if(i==0) return nums[i]==target;
+
+        if(dp[i][target]!=-1) return dp[i][target];
+
+        bool nottake=solve(i-1,target,nums,dp);
+        bool take=false;
+        if(nums[i] <=target){
+            take=solve(i-1,target-nums[i],nums,dp);
+        }
+        return dp[i][target] = take||nottake;
     }
-    if(idx>=nums.size()||sum<0){
-         return false;
-    }
-    
-    if (dp[idx][sum]!=-1){
-        return dp[idx][sum];
-    }
-    int pick=helper(idx+1,nums,sum-nums[idx],dp);
-    int notpick=helper(idx+1,nums,sum,dp);
-    return dp[idx][sum]=pick || notpick;
-}
     bool canPartition(vector<int>& nums) {
+        int m=nums.size();
         int sum=0;
-        
-        for(int i=0;i<nums.size();i++){
-                 sum +=nums[i];
+        for(int i=0;i<m;i++){
+            sum +=nums[i];
         }
-        vector<vector<int>> dp(nums.size()+1,vector<int>(sum+1,-1));
-        if(sum%2==0){
-            return helper(0,nums,sum/2,dp);
-        }
-        return false;
+        if(sum % 2 != 0) return false;
+        int target=sum/2;
+
+        vector<vector<int>> dp(m,vector<int>(target+1,-1));
+
+        return solve(m-1,target,nums,dp);
     }
 };
