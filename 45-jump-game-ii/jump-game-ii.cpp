@@ -4,7 +4,6 @@ public:
         int l=0;
         int r=0;
         int jump=0;
-
         while(r<nums.size()-1){
             int maxi=0;
             for(int i=l;i<=r;i++){
@@ -12,7 +11,7 @@ public:
             }
             l=r+1;
             r=maxi;
-            jump +=1;
+            jump++;
         }
         return jump;
     }
