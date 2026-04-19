@@ -1,35 +1,30 @@
 class Solution {
 public:
-    int numIslands(vector<vector<char>>& grid) {
-        int m= grid.size();
-        int n= grid[0].size();
+    void dfs(int i,int j,vector<vector<char>> &grid){
+        int m=grid.size();
+        int n=grid[0].size();
 
-        queue<pair<int,int>> q;
+        if(i<0 || j<0|| i>=m || j>=n || grid[i][j]!='1'){
+            return;
+        }
+        grid[i][j]=0;
+
+        dfs(i,j+1,grid);
+        dfs(i,j-1,grid);
+        dfs(i-1,j,grid);
+        dfs(i+1,j,grid);
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int m=grid.size();
+        int n=grid[0].size();
         int count=0;
+
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]=='1'){
-                q.push({i,j});
-                grid[i][j]='0';
-                count++;
+                    dfs(i,j,grid);
+                    count++;
                 }
-        while(!q.empty()){
-            auto[x,y] = q.front();
-            q.pop();
-
-            int dx[4]={0,0,1,-1};
-            int dy[4]={1,-1,0,0};
-
-            for(int i=0;i<4;i++){
-                int nx=x+dx[i];
-                int ny=y+dy[i];
-
-                if(nx>=0 && ny>=0 && nx<m && ny<n && grid[nx][ny]=='1'){
-                    q.push({nx,ny});
-                    grid[nx][ny]=0;
-                }
-            }
-        }
             }
         }
         return count;
