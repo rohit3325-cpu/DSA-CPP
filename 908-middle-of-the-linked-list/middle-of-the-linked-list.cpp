@@ -23,10 +23,8 @@ public:
         int len=getlen(head);
         int i=0;
         ListNode* temp=head;
-        while(i<len){
-            if(i==len/2){
-                break;
-            }
+        while(i<len/2){
+           
             temp=temp->next;
             i++;
         }
